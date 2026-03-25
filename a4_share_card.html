@@ -197,8 +197,65 @@
     </a>
 
     <div class="footer-note">이미지 또는 버튼 클릭 시 구매 페이지로 이동합니다</div>
+
+    <button class="btn-kakao" id="kakao-share-btn">
+      <img src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png" style="width:20px;vertical-align:middle;margin-right:6px;">
+      카카오톡으로 공유하기
+    </button>
   </div>
 </div>
 
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"></script>
+<script>
+  Kakao.init('2b8b454766036d77d0e85f95b4121e5f');
+
+  document.getElementById('kakao-share-btn').addEventListener('click', function() {
+    Kakao.Share.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: '국가대표 A4 복사용지 2,500매',
+        description: 'Made in Korea · 최저가 · 지금 바로 구매하세요!',
+        imageUrl: 'https://synergyum.github.io/Teddy/a4.png',
+        link: {
+          mobileWebUrl: 'https://www.coupang.com/vp/products/9454794426?itemId=28130205100&vendorItemId=95085857447',
+          webUrl: 'https://www.coupang.com/vp/products/9454794426?itemId=28130205100&vendorItemId=95085857447',
+        },
+      },
+      buttons: [
+        {
+          title: '지금 구매하기',
+          link: {
+            mobileWebUrl: 'https://www.coupang.com/vp/products/9454794426?itemId=28130205100&vendorItemId=95085857447',
+            webUrl: 'https://www.coupang.com/vp/products/9454794426?itemId=28130205100&vendorItemId=95085857447',
+          },
+        },
+      ],
+    });
+  });
+</script>
+
+<style>
+  .btn-kakao {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 13px 0;
+    margin-top: 10px;
+    background: #FEE500;
+    color: #000;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+  }
+  .btn-kakao:hover {
+    background: #f0d800;
+    transform: translateY(-1px);
+  }
+</style>
 </body>
 </html>
