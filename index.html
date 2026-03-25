@@ -6,9 +6,7 @@
   <title>국가대표 A4용지 - 카카오톡 공유</title>
 
   <!-- Kakao SDK -->
-  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"
-          integrity="sha384-DKYJZ8NLiK8MN4/C5P2ezmFnkrN6BFo0O2FZGE8z1bo0lyVJ/Im1YCablVoF6CI"
-          crossorigin="anonymous"></script>
+  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"></script>
 
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -31,6 +29,9 @@
       overflow: hidden;
       box-shadow: 0 2px 12px rgba(0,0,0,0.1);
       margin-bottom: 20px;
+      text-decoration: none;
+      color: inherit;
+      display: block;
     }
     .kakao-card img {
       width: 100%;
@@ -54,6 +55,7 @@
       padding: 14px;
       font-size: 14px;
       color: #555;
+      font-weight: 600;
     }
     .share-btn {
       width: 100%;
@@ -75,54 +77,88 @@
       margin-top: 16px;
       line-height: 1.6;
     }
+    .error-msg {
+      display: none;
+      background: #FFEBEE;
+      color: #C62828;
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 12px;
+      font-size: 13px;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
 
   <h2>국가대표 A4용지 80g 2,500매</h2>
 
-  <div class="kakao-card">
+  <!-- 카드 클릭하면 쿠팡으로 이동 -->
+  <a class="kakao-card" href="https://www.coupang.com/vp/products/9454794426?itemId=28130205100&vendorItemId=95085857447" target="_blank">
     <img src="https://gi.esmplus.com/synergyum0/synergyum/260311_A4_%EC%8D%B8%EB%84%A4%EC%9D%BC_4.png" alt="국가대표 A4용지">
     <div class="info">
       <h3>국가대표 A4용지 80g 2,500매</h3>
       <p>Made in Korea, 최저가 구매</p>
     </div>
-    <div class="btn-area">구매하기</div>
-  </div>
+    <div class="btn-area">쿠팡에서 구매하기 →</div>
+  </a>
 
+  <!-- 카카오톡 공유 버튼 -->
   <button class="share-btn" onclick="shareToKakao()">
     카카오톡으로 공유하기 💬
   </button>
 
+  <div class="error-msg" id="errorMsg"></div>
+
   <p class="note">
-    버튼을 누르면 카카오톡이 열립니다.<br>
-    보낼 사람을 선택하면 카드형 메시지가 전송됩니다.
+    카드 클릭 → 쿠팡 제품 페이지로 이동<br>
+    노란 버튼 → 카카오톡으로 지인에게 공유
   </p>
 
   <script>
-    // 시너지움 JavaScript 키
-    Kakao.init('2b8b454766036d77d0e85f95b4121e5f');
+    // SDK 초기화
+    try {
+      Kakao.init('2b8b454766036d77d0e85f95b4121e5f');
+      console.log('Kakao SDK 초기화:', Kakao.isInitialized());
+    } catch(e) {
+      showError('SDK 초기화 실패: ' + e.message);
+    }
 
     function shareToKakao() {
-      Kakao.Share.sendDefault({
-        objectType: 'feed',
-        content: {
-          title: '국가대표 A4용지 80g 2,500매',
-          description: 'Made in Korea, 최저가 구매',
-          imageUrl: 'https://gi.esmplus.com/synergyum0/synergyum/260311_A4_%EC%8D%B8%EB%84%A4%EC%9D%BC_4.png',
-          link: {
-            mobileWebUrl: 'https://www.coupang.com/vp/products/9454794426?itemId=28130205100&vendorItemId=95085857447',
-            webUrl: 'https://www.coupang.com/vp/products/9454794426?itemId=28130205100&vendorItemId=95085857447',
+      if (!Kakao.isInitialized()) {
+        showError('Kakao SDK가 초기화되지 않았습니다. 페이지를 새로고침 해주세요.');
+        return;
+      }
+
+      try {
+        Kakao.Share.sendDefault({
+          objectType: 'feed',
+          content: {
+            title: '국가대표 A4용지 80g 2,500매',
+            description: 'Made in Korea, 최저가 구매',
+            imageUrl: 'https://gi.esmplus.com/synergyum0/synergyum/260311_A4_%EC%8D%B8%EB%84%A4%EC%9D%BC_4.png',
+            link: {
+              mobileWebUrl: 'https://www.coupang.com/vp/products/9454794426?itemId=28130205100&vendorItemId=95085857447',
+              webUrl: 'https://www.coupang.com/vp/products/9454794426?itemId=28130205100&vendorItemId=95085857447',
+            },
           },
-        },
-        buttons: [{
-          title: '구매하기',
-          link: {
-            mobileWebUrl: 'https://www.coupang.com/vp/products/9454794426?itemId=28130205100&vendorItemId=95085857447',
-            webUrl: 'https://www.coupang.com/vp/products/9454794426?itemId=28130205100&vendorItemId=95085857447',
-          },
-        }],
-      });
+          buttons: [{
+            title: '구매하기',
+            link: {
+              mobileWebUrl: 'https://www.coupang.com/vp/products/9454794426?itemId=28130205100&vendorItemId=95085857447',
+              webUrl: 'https://www.coupang.com/vp/products/9454794426?itemId=28130205100&vendorItemId=95085857447',
+            },
+          }],
+        });
+      } catch(e) {
+        showError('공유 실패: ' + e.message);
+      }
+    }
+
+    function showError(msg) {
+      var el = document.getElementById('errorMsg');
+      el.textContent = msg;
+      el.style.display = 'block';
     }
   </script>
 
