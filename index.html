@@ -4,10 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>국가대표 A4용지 - 카카오톡 공유</title>
-
-  <!-- Kakao SDK -->
   <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"></script>
-
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -44,6 +41,7 @@
       font-size: 15px;
       color: #111;
       margin-bottom: 6px;
+      font-weight: 800;
     }
     .kakao-card .info p {
       font-size: 13px;
@@ -93,7 +91,6 @@
 
   <h2>국가대표 A4용지 80g 2,500매</h2>
 
-  <!-- 카드 클릭하면 쿠팡으로 이동 -->
   <a class="kakao-card" href="https://www.coupang.com/vp/products/9454794426?itemId=28130205100&vendorItemId=95085857447" target="_blank">
     <img src="https://gi.esmplus.com/synergyum0/synergyum/260311_A4_%EC%8D%B8%EB%84%A4%EC%9D%BC_4.png" alt="국가대표 A4용지">
     <div class="info">
@@ -103,7 +100,6 @@
     <div class="btn-area">쿠팡에서 구매하기 →</div>
   </a>
 
-  <!-- 카카오톡 공유 버튼 -->
   <button class="share-btn" onclick="shareToKakao()">
     카카오톡으로 공유하기 💬
   </button>
@@ -116,17 +112,18 @@
   </p>
 
   <script>
-    // SDK 초기화
     try {
       Kakao.init('2b8b454766036d77d0e85f95b4121e5f');
-      console.log('Kakao SDK 초기화:', Kakao.isInitialized());
     } catch(e) {
       showError('SDK 초기화 실패: ' + e.message);
     }
 
+    // 쿠팡으로 자동 이동하는 중간 페이지 (등록된 도메인)
+    var BUY_URL = 'https://synergyum.github.io/Teddy/buy.html';
+
     function shareToKakao() {
       if (!Kakao.isInitialized()) {
-        showError('Kakao SDK가 초기화되지 않았습니다. 페이지를 새로고침 해주세요.');
+        showError('SDK 초기화 실패. 페이지를 새로고침 해주세요.');
         return;
       }
 
@@ -134,19 +131,19 @@
         Kakao.Share.sendDefault({
           objectType: 'feed',
           content: {
-            title: '국가대표 A4용지 80g 2,500매',
+            title: '■ 국가대표 A4용지 80g 2,500매',
             description: 'Made in Korea, 최저가 구매',
             imageUrl: 'https://gi.esmplus.com/synergyum0/synergyum/260311_A4_%EC%8D%B8%EB%84%A4%EC%9D%BC_4.png',
             link: {
-              mobileWebUrl: 'https://www.coupang.com/vp/products/9454794426?itemId=28130205100&vendorItemId=95085857447',
-              webUrl: 'https://www.coupang.com/vp/products/9454794426?itemId=28130205100&vendorItemId=95085857447',
+              mobileWebUrl: BUY_URL,
+              webUrl: BUY_URL,
             },
           },
           buttons: [{
             title: '구매하기',
             link: {
-              mobileWebUrl: 'https://www.coupang.com/vp/products/9454794426?itemId=28130205100&vendorItemId=95085857447',
-              webUrl: 'https://www.coupang.com/vp/products/9454794426?itemId=28130205100&vendorItemId=95085857447',
+              mobileWebUrl: BUY_URL,
+              webUrl: BUY_URL,
             },
           }],
         });
